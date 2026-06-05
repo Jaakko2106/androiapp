@@ -17,12 +17,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -174,7 +179,13 @@ fun ContentSection() {
     Card(
       shape = RoundedCornerShape(28.dp),
       colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-      modifier = Modifier.fillMaxWidth().clickable { }
+      modifier = Modifier
+        .fillMaxWidth()
+        .clickable(
+            onClick = { },
+            onClickLabel = "View featured project Zenith"
+        )
+        .semantics { role = Role.Button }
     ) {
       Column(modifier = Modifier.padding(24.dp)) {
         Row(
@@ -245,7 +256,13 @@ fun ContentSection() {
       shape = RoundedCornerShape(28.dp),
       colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
       border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-      modifier = Modifier.fillMaxWidth().clickable { }
+      modifier = Modifier
+        .fillMaxWidth()
+        .clickable(
+            onClick = { },
+            onClickLabel = "Get in touch"
+        )
+        .semantics { role = Role.Button }
     ) {
       Row(
         modifier = Modifier
@@ -418,7 +435,12 @@ fun DetailedProjectCard(
             Spacer(modifier = Modifier.height(16.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable { }
+                modifier = Modifier
+                    .clickable(
+                        onClick = { },
+                        onClickLabel = "Open $linkText"
+                    )
+                    .semantics { role = Role.Button }
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Link,
@@ -509,6 +531,17 @@ fun SkillCategory(title: String, skills: List<Pair<String, Float>>) {
             )
             Spacer(modifier = Modifier.height(16.dp))
             skills.forEach { (skill, proficiency) ->
+                var targetProgress by remember { mutableFloatStateOf(0f) }
+                val progress by animateFloatAsState(
+                    targetValue = targetProgress,
+                    animationSpec = tween(durationMillis = 1000),
+                    label = "$skill progress"
+                )
+
+                LaunchedEffect(proficiency) {
+                    targetProgress = proficiency
+                }
+
                 Column(modifier = Modifier.padding(bottom = 12.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -522,7 +555,7 @@ fun SkillCategory(title: String, skills: List<Pair<String, Float>>) {
                     }
                     Spacer(modifier = Modifier.height(6.dp))
                     LinearProgressIndicator(
-                        progress = { proficiency },
+                        progress = { progress },
                         modifier = Modifier.fillMaxWidth().height(6.dp).clip(RoundedCornerShape(3.dp)),
                         color = MaterialTheme.colorScheme.primary,
                         trackColor = MaterialTheme.colorScheme.surfaceVariant
@@ -550,7 +583,13 @@ fun ContactSection() {
             shape = RoundedCornerShape(28.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-            modifier = Modifier.fillMaxWidth().clickable { }
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    onClick = { },
+                    onClickLabel = "Email Jaakko"
+                )
+                .semantics { role = Role.Button }
         ) {
             Row(
                 modifier = Modifier
@@ -596,7 +635,13 @@ fun ContactSection() {
             shape = RoundedCornerShape(28.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-            modifier = Modifier.fillMaxWidth().clickable { }
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    onClick = { },
+                    onClickLabel = "Connect on LinkedIn"
+                )
+                .semantics { role = Role.Button }
         ) {
             Row(
                 modifier = Modifier
@@ -661,7 +706,12 @@ fun StatsCard(icon: ImageVector, title: String, subtitle: String, modifier: Modi
   Card(
     shape = RoundedCornerShape(28.dp),
     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f)),
-    modifier = modifier.clickable { }
+    modifier = modifier
+        .clickable(
+            onClick = { },
+            onClickLabel = "View details for $title"
+        )
+        .semantics { role = Role.Button }
   ) {
     Column(modifier = Modifier.padding(20.dp)) {
       Icon(
@@ -710,7 +760,12 @@ fun BottomNavigationBar(selectedTab: String, onTabSelected: (String) -> Unit) {
 fun NavBarItem(icon: ImageVector, label: String, isSelected: Boolean, onClick: () -> Unit) {
   Column(
     horizontalAlignment = Alignment.CenterHorizontally,
-    modifier = Modifier.clickable(onClick = onClick)
+    modifier = Modifier
+        .clickable(
+            onClick = onClick,
+            onClickLabel = "Navigate to $label"
+        )
+        .semantics { role = Role.Tab }
   ) {
     Box(
       modifier = Modifier
