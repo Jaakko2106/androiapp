@@ -44,13 +44,8 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     setContent {
-      var isDarkTheme by remember { mutableStateOf(false) }
       val systemTheme = isSystemInDarkTheme()
-      
-      // Initialize with system theme on first composition
-      LaunchedEffect(Unit) {
-          isDarkTheme = systemTheme
-      }
+      var isDarkTheme by remember { mutableStateOf(systemTheme) }
 
       MyApplicationTheme(darkTheme = isDarkTheme) {
         PortfolioSleekApp(
