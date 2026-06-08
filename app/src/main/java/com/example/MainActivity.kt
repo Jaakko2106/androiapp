@@ -25,9 +25,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -44,13 +42,8 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     setContent {
-      var isDarkTheme by remember { mutableStateOf(false) }
       val systemTheme = isSystemInDarkTheme()
-      
-      // Initialize with system theme on first composition
-      LaunchedEffect(Unit) {
-          isDarkTheme = systemTheme
-      }
+      var isDarkTheme by remember { mutableStateOf(systemTheme) }
 
       MyApplicationTheme(darkTheme = isDarkTheme) {
         PortfolioSleekApp(
@@ -542,15 +535,29 @@ fun SkillCategory(title: String, skills: List<Pair<String, Float>>) {
                     targetProgress = proficiency
                 }
 
-                Column(modifier = Modifier.padding(bottom = 12.dp)) {
+                Column(
+                    modifier = Modifier
+                        .padding(bottom = 12.dp)
+                        .semantics(mergeDescendants = true) {
+                            progressBarRangeInfo = ProgressBarRangeInfo(proficiency, 0f..1f)
+                            stateDescription = "${(proficiency * 100).toInt()}% proficiency"
+                        }
+                ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = skill,
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Text(
+                            text = "${(proficiency * 100).toInt()}%",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontWeight = FontWeight.Medium
                         )
                     }
                     Spacer(modifier = Modifier.height(6.dp))
