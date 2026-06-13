@@ -25,9 +25,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -134,6 +138,9 @@ fun HeaderSection(isDarkTheme: Boolean, onThemeToggle: () -> Unit) {
       modifier = Modifier
         .size(48.dp)
         .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f), CircleShape)
+        .semantics {
+            stateDescription = if (isDarkTheme) "Dark mode active" else "Light mode active"
+        }
     ) {
       Icon(
         imageVector = if (isDarkTheme) Icons.Outlined.LightMode else Icons.Outlined.DarkMode,
@@ -444,7 +451,7 @@ fun DetailedProjectCard(
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Link,
-                    contentDescription = linkText,
+                    contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(16.dp)
                 )
@@ -542,7 +549,14 @@ fun SkillCategory(title: String, skills: List<Pair<String, Float>>) {
                     targetProgress = proficiency
                 }
 
-                Column(modifier = Modifier.padding(bottom = 12.dp)) {
+                Column(
+                    modifier = Modifier
+                        .padding(bottom = 12.dp)
+                        .semantics(mergeDescendants = true) {
+                            progressBarRangeInfo = ProgressBarRangeInfo(progress, 0f..1f)
+                            stateDescription = "${(progress * 100).toInt()}% proficiency"
+                        }
+                ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -716,7 +730,7 @@ fun StatsCard(icon: ImageVector, title: String, subtitle: String, modifier: Modi
     Column(modifier = Modifier.padding(20.dp)) {
       Icon(
         imageVector = icon,
-        contentDescription = title,
+        contentDescription = null,
         tint = MaterialTheme.colorScheme.primary,
         modifier = Modifier.padding(bottom = 8.dp)
       )
@@ -765,7 +779,10 @@ fun NavBarItem(icon: ImageVector, label: String, isSelected: Boolean, onClick: (
             onClick = onClick,
             onClickLabel = "Navigate to $label"
         )
-        .semantics { role = Role.Tab }
+        .semantics {
+            role = Role.Tab
+            selected = isSelected
+        }
   ) {
     Box(
       modifier = Modifier
@@ -777,7 +794,7 @@ fun NavBarItem(icon: ImageVector, label: String, isSelected: Boolean, onClick: (
     ) {
       Icon(
         imageVector = icon,
-        contentDescription = label,
+        contentDescription = null,
         tint = if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
       )
     }
