@@ -25,9 +25,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -44,13 +48,8 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     setContent {
-      var isDarkTheme by remember { mutableStateOf(false) }
       val systemTheme = isSystemInDarkTheme()
-      
-      // Initialize with system theme on first composition
-      LaunchedEffect(Unit) {
-          isDarkTheme = systemTheme
-      }
+      var isDarkTheme by remember { mutableStateOf(systemTheme) }
 
       MyApplicationTheme(darkTheme = isDarkTheme) {
         PortfolioSleekApp(
@@ -137,7 +136,7 @@ fun HeaderSection(isDarkTheme: Boolean, onThemeToggle: () -> Unit) {
     ) {
       Icon(
         imageVector = if (isDarkTheme) Icons.Outlined.LightMode else Icons.Outlined.DarkMode,
-        contentDescription = "Toggle Theme",
+        contentDescription = if (isDarkTheme) "Switch to light theme" else "Switch to dark theme",
         tint = MaterialTheme.colorScheme.onSurfaceVariant
       )
     }
@@ -556,7 +555,14 @@ fun SkillCategory(title: String, skills: List<Pair<String, Float>>) {
                     Spacer(modifier = Modifier.height(6.dp))
                     LinearProgressIndicator(
                         progress = { progress },
-                        modifier = Modifier.fillMaxWidth().height(6.dp).clip(RoundedCornerShape(3.dp)),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(6.dp)
+                            .clip(RoundedCornerShape(3.dp))
+                            .semantics(mergeDescendants = true) {
+                                progressBarRangeInfo = ProgressBarRangeInfo(progress, 0f..1f)
+                                stateDescription = "${(progress * 100).toInt()}%"
+                            },
                         color = MaterialTheme.colorScheme.primary,
                         trackColor = MaterialTheme.colorScheme.surfaceVariant
                     )
@@ -765,7 +771,10 @@ fun NavBarItem(icon: ImageVector, label: String, isSelected: Boolean, onClick: (
             onClick = onClick,
             onClickLabel = "Navigate to $label"
         )
-        .semantics { role = Role.Tab }
+        .semantics(mergeDescendants = true) {
+            role = Role.Tab
+            selected = isSelected
+        }
   ) {
     Box(
       modifier = Modifier
@@ -777,7 +786,7 @@ fun NavBarItem(icon: ImageVector, label: String, isSelected: Boolean, onClick: (
     ) {
       Icon(
         imageVector = icon,
-        contentDescription = label,
+        contentDescription = null,
         tint = if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
       )
     }
