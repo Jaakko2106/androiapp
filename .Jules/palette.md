@@ -1,0 +1,3 @@
+## 2025-05-15 - Compose Theme Initialization & Accessibility
+**Learning:** Initializing theme state within a `LaunchedEffect` in Jetpack Compose causes a visual flicker on app launch because the initial composition uses the default state value before the effect updates it. Also, custom progress indicators require explicit `progressBarRangeInfo` and `stateDescription` to be accessible to screen readers.
+**Action:** Initialize theme state directly with the system theme value (e.g., `isSystemInDarkTheme()`) during `remember` initialization. Always use `semantics(mergeDescendants = true)` on interactive containers and set redundant icon `contentDescription` to `null` to ensure cohesive screen reader announcements.
