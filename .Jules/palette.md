@@ -1,0 +1,3 @@
+## 2025-05-15 - [Theme Initialization & Accessibility Semantics]
+**Learning:** Initializing theme state within a `LaunchedEffect` in Jetpack Compose causes a visual flicker on app launch because the initial state is used for the first frame before being updated. Also, cohesive screen reader announcements for complex components like progress bars and navigation items require merging descendants and explicitly setting `stateDescription` and `progressBarRangeInfo`.
+**Action:** Always initialize theme state directly with the system theme value in `remember` (e.g., `mutableStateOf(isSystemInDarkTheme())`). Use `semantics(mergeDescendants = true)` on parent containers to group related text and icons, and set redundant icon `contentDescription` to `null`.
