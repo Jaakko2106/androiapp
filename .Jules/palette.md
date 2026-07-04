@@ -1,0 +1,3 @@
+## 2025-05-24 - Theme and Accessibility Enhancements
+**Learning:** Initializing theme state within a `LaunchedEffect` causes a visual flicker on app launch because the first frame is rendered with the default value before the effect runs. Also, custom progress indicators require explicit `ProgressBarRangeInfo` and `stateDescription` in their `semantics` block to be correctly announced by screen readers.
+**Action:** Initialize state directly with the system value in `remember` (e.g., `remember { mutableStateOf(isSystemInDarkTheme()) }`) and always merge descendants in semantics for complex components like progress bars to provide a cohesive announcement.
