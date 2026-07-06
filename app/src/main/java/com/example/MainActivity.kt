@@ -25,9 +25,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -44,13 +42,8 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     setContent {
-      var isDarkTheme by remember { mutableStateOf(false) }
       val systemTheme = isSystemInDarkTheme()
-      
-      // Initialize with system theme on first composition
-      LaunchedEffect(Unit) {
-          isDarkTheme = systemTheme
-      }
+      var isDarkTheme by remember { mutableStateOf(systemTheme) }
 
       MyApplicationTheme(darkTheme = isDarkTheme) {
         PortfolioSleekApp(
@@ -134,6 +127,9 @@ fun HeaderSection(isDarkTheme: Boolean, onThemeToggle: () -> Unit) {
       modifier = Modifier
         .size(48.dp)
         .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f), CircleShape)
+        .semantics {
+            stateDescription = if (isDarkTheme) "Dark mode active" else "Light mode active"
+        }
     ) {
       Icon(
         imageVector = if (isDarkTheme) Icons.Outlined.LightMode else Icons.Outlined.DarkMode,
@@ -542,7 +538,15 @@ fun SkillCategory(title: String, skills: List<Pair<String, Float>>) {
                     targetProgress = proficiency
                 }
 
-                Column(modifier = Modifier.padding(bottom = 12.dp)) {
+                Column(
+                    modifier = Modifier
+                        .padding(bottom = 12.dp)
+                        .semantics(mergeDescendants = true) {
+                            contentDescription = skill
+                            progressBarRangeInfo = ProgressBarRangeInfo(progress, 0f..1f)
+                            stateDescription = "${(progress * 100).toInt()}% proficiency"
+                        }
+                ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -765,7 +769,11 @@ fun NavBarItem(icon: ImageVector, label: String, isSelected: Boolean, onClick: (
             onClick = onClick,
             onClickLabel = "Navigate to $label"
         )
-        .semantics { role = Role.Tab }
+        .semantics(mergeDescendants = true) {
+            role = Role.Tab
+            selected = isSelected
+            contentDescription = label
+        }
   ) {
     Box(
       modifier = Modifier
@@ -777,7 +785,7 @@ fun NavBarItem(icon: ImageVector, label: String, isSelected: Boolean, onClick: (
     ) {
       Icon(
         imageVector = icon,
-        contentDescription = label,
+        contentDescription = null,
         tint = if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
       )
     }
