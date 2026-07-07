@@ -1,5 +1,7 @@
 package com.example
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
 import com.example.ui.theme.MyApplicationTheme
@@ -20,9 +22,28 @@ class GreetingScreenshotTest {
   @get:Rule val composeTestRule = createComposeRule()
 
   @Test
-  fun greeting_screenshot() {
-    composeTestRule.setContent { MyApplicationTheme { Greeting("Robolectric") } }
+  fun greeting_screenshot_light() {
+    composeTestRule.setContent {
+      MyApplicationTheme(darkTheme = false) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+          GreetingSection()
+        }
+      }
+    }
 
-    composeTestRule.onRoot().captureRoboImage(filePath = "src/test/screenshots/greeting.png")
+    composeTestRule.onRoot().captureRoboImage(filePath = "src/test/screenshots/greeting_light.png")
+  }
+
+  @Test
+  fun greeting_screenshot_dark() {
+    composeTestRule.setContent {
+      MyApplicationTheme(darkTheme = true) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+          GreetingSection()
+        }
+      }
+    }
+
+    composeTestRule.onRoot().captureRoboImage(filePath = "src/test/screenshots/greeting_dark.png")
   }
 }
