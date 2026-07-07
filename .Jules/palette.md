@@ -1,0 +1,3 @@
+## 2025-05-15 - Improving Accessibility and Polish in Jetpack Compose
+**Learning:** Custom UI elements like proficiency bars and theme toggles in Jetpack Compose often lack the necessary semantics for screen readers. Using `semantics(mergeDescendants = true)` combined with `progressBarRangeInfo` and `stateDescription` provides a much richer and more accurate experience for users with visual impairments. Also, initializing theme state directly in `remember` instead of `LaunchedEffect` prevents a visual flicker on startup.
+**Action:** Always verify custom indicators for correct semantic properties and ensure initial UI state is derived synchronously whenever possible to avoid layout/theme jumps.
