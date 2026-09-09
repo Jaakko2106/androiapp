@@ -768,9 +768,10 @@ fun NavBarItem(icon: ImageVector, label: String, isSelected: Boolean, onClick: (
             onClick = onClick,
             onClickLabel = "Navigate to $label"
         )
-        .semantics {
+        .semantics(mergeDescendants = true) {
             role = Role.Tab
             selected = isSelected
+            contentDescription = label
         }
   ) {
     Box(
@@ -783,7 +784,7 @@ fun NavBarItem(icon: ImageVector, label: String, isSelected: Boolean, onClick: (
     ) {
       Icon(
         imageVector = icon,
-        contentDescription = label,
+        contentDescription = null,
         tint = if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
       )
     }
