@@ -466,7 +466,7 @@ fun AboutSection() {
     ) {
         Image(
             painter = painterResource(id = R.drawable.jaakko_avatar),
-            contentDescription = "Profile Picture",
+            contentDescription = "Jaakko Kallio profile picture",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(160.dp)
