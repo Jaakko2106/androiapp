@@ -542,6 +542,7 @@ fun SkillCategory(title: String, skills: List<Pair<String, Float>>) {
                     modifier = Modifier
                         .padding(bottom = 12.dp)
                         .semantics(mergeDescendants = true) {
+                            contentDescription = skill
                             progressBarRangeInfo = ProgressBarRangeInfo(progress, 0f..1f)
                             stateDescription = "${(proficiency * 100).toInt()}% proficiency"
                         }
