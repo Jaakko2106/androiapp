@@ -613,7 +613,7 @@ fun ContactSection() {
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Mail,
-                            contentDescription = "Mail",
+                            contentDescription = null,
                             tint = MaterialTheme.colorScheme.onPrimary,
                             modifier = Modifier.size(20.dp)
                         )
@@ -665,7 +665,7 @@ fun ContactSection() {
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Link,
-                            contentDescription = "LinkedIn",
+                            contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSecondaryContainer,
                             modifier = Modifier.size(20.dp)
                         )
