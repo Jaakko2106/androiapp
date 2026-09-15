@@ -418,7 +418,7 @@ fun DetailedProjectCard(
                     items(projectImages) { imageUrl ->
                         AsyncImage(
                             model = imageUrl,
-                            contentDescription = "Project image",
+                            contentDescription = "$title screenshot",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .size(240.dp, 160.dp)
@@ -436,7 +436,7 @@ fun DetailedProjectCard(
                         onClick = { },
                         onClickLabel = "Open $linkText"
                     )
-                    .semantics { role = Role.Button }
+                    .semantics(mergeDescendants = true) { role = Role.Button }
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Link,
