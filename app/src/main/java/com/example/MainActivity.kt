@@ -127,13 +127,15 @@ fun HeaderSection(isDarkTheme: Boolean, onThemeToggle: () -> Unit) {
       modifier = Modifier
         .size(48.dp)
         .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f), CircleShape)
-        .semantics {
-          stateDescription = if (isDarkTheme) "Dark mode active" else "Light mode active"
+        .semantics(mergeDescendants = true) {
+          role = Role.Switch
+          stateDescription = if (isDarkTheme) "On" else "Off"
+          contentDescription = "Dark mode"
         }
     ) {
       Icon(
         imageVector = if (isDarkTheme) Icons.Outlined.LightMode else Icons.Outlined.DarkMode,
-        contentDescription = "Toggle Theme",
+        contentDescription = null,
         tint = MaterialTheme.colorScheme.onSurfaceVariant
       )
     }
