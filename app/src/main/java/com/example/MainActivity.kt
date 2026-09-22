@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -416,10 +417,10 @@ fun DetailedProjectCard(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    items(projectImages) { imageUrl ->
+                    itemsIndexed(projectImages) { index, imageUrl ->
                         AsyncImage(
                             model = imageUrl,
-                            contentDescription = "Project image",
+                            contentDescription = "$title screenshot ${index + 1}",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .size(240.dp, 160.dp)
