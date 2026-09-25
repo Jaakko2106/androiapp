@@ -144,7 +144,11 @@ fun HeaderSection(isDarkTheme: Boolean, onThemeToggle: () -> Unit) {
 
 @Composable
 fun GreetingSection() {
-  Column(modifier = Modifier.padding(horizontal = 24.dp, vertical = 24.dp)) {
+  Column(
+    modifier = Modifier
+      .padding(horizontal = 24.dp, vertical = 24.dp)
+      .semantics(mergeDescendants = true) {}
+  ) {
     Text(
       text = "Hello, I'm ",
       style = MaterialTheme.typography.displayMedium,
