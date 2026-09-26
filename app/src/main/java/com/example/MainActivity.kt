@@ -145,16 +145,20 @@ fun HeaderSection(isDarkTheme: Boolean, onThemeToggle: () -> Unit) {
 @Composable
 fun GreetingSection() {
   Column(modifier = Modifier.padding(horizontal = 24.dp, vertical = 24.dp)) {
-    Text(
-      text = "Hello, I'm ",
-      style = MaterialTheme.typography.displayMedium,
-      color = MaterialTheme.colorScheme.onBackground
-    )
-    Text(
-      text = "Jaakko",
-      style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.SemiBold),
-      color = MaterialTheme.colorScheme.primary
-    )
+    Row(
+      modifier = Modifier.semantics(mergeDescendants = true) { heading() }
+    ) {
+      Text(
+        text = "Hello, I'm ",
+        style = MaterialTheme.typography.displayMedium,
+        color = MaterialTheme.colorScheme.onBackground
+      )
+      Text(
+        text = "Jaakko",
+        style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.SemiBold),
+        color = MaterialTheme.colorScheme.primary
+      )
+    }
     Spacer(modifier = Modifier.height(8.dp))
     Text(
       text = "Full Stack Developer & UI Designer",
