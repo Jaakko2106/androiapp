@@ -2,6 +2,10 @@ package com.example
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
 import com.example.ui.theme.MyApplicationTheme
@@ -32,5 +36,20 @@ class GreetingScreenshotTest {
     }
 
     composeTestRule.onRoot().captureRoboImage(filePath = "src/test/screenshots/greeting.png")
+  }
+
+  @Test
+  fun greeting_heading_semantics() {
+    composeTestRule.setContent {
+      MyApplicationTheme {
+        Surface(color = MaterialTheme.colorScheme.background) {
+          GreetingSection()
+        }
+      }
+    }
+
+    composeTestRule
+      .onNode(hasText("Hello, I'm ", substring = true) and SemanticsMatcher.expectValue(SemanticsProperties.Heading, Unit))
+      .assertIsDisplayed()
   }
 }
