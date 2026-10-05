@@ -324,7 +324,8 @@ fun ProjectsSection() {
         Text(
             text = "Projects",
             style = MaterialTheme.typography.displaySmall,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.semantics { heading() }
         )
         DetailedProjectCard(
             title = "Project Zenith",
@@ -484,7 +485,9 @@ fun AboutSection() {
             text = "Skills & Expertise",
             style = MaterialTheme.typography.displaySmall,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.align(Alignment.Start)
+            modifier = Modifier
+                .align(Alignment.Start)
+                .semantics { heading() }
         )
         SkillCategory(
             title = "Programming Languages",
@@ -586,7 +589,8 @@ fun ContactSection() {
         Text(
             text = "Contact",
             style = MaterialTheme.typography.displaySmall,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.semantics { heading() }
         )
         Card(
             shape = RoundedCornerShape(28.dp),
