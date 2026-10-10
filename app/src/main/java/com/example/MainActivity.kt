@@ -113,7 +113,10 @@ fun HeaderSection(isDarkTheme: Boolean, onThemeToggle: () -> Unit) {
       modifier = Modifier
         .size(48.dp)
         .clip(CircleShape)
-        .background(MaterialTheme.colorScheme.primaryContainer),
+        .background(MaterialTheme.colorScheme.primaryContainer)
+        .semantics(mergeDescendants = true) {
+          contentDescription = "Profile initials for Jaakko Kallio"
+        },
       contentAlignment = Alignment.Center
     ) {
       Text(
