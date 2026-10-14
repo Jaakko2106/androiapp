@@ -702,7 +702,10 @@ fun ContactSection() {
 fun SkillChip(text: String) {
   Surface(
     shape = RoundedCornerShape(6.dp),
-    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.4f)
+    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.4f),
+    modifier = Modifier.semantics {
+      contentDescription = "$text skill"
+    }
   ) {
     Text(
       text = text,
