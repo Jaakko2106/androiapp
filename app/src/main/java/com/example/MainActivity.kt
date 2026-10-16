@@ -187,7 +187,7 @@ fun ContentSection() {
             onClick = { },
             onClickLabel = "View featured project Zenith"
         )
-        .semantics { role = Role.Button }
+        .semantics(mergeDescendants = true) { role = Role.Button }
     ) {
       Column(modifier = Modifier.padding(24.dp)) {
         Row(
@@ -197,7 +197,7 @@ fun ContentSection() {
         ) {
           Icon(
             imageVector = Icons.Outlined.RocketLaunch,
-            contentDescription = "Featured Project",
+            contentDescription = null,
             tint = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier.size(32.dp)
           )
@@ -264,7 +264,7 @@ fun ContentSection() {
             onClick = { },
             onClickLabel = "Get in touch"
         )
-        .semantics { role = Role.Button }
+        .semantics(mergeDescendants = true) { role = Role.Button }
     ) {
       Row(
         modifier = Modifier
@@ -285,7 +285,7 @@ fun ContentSection() {
           ) {
             Icon(
               imageVector = Icons.Outlined.Mail,
-              contentDescription = "Mail",
+              contentDescription = null,
               tint = MaterialTheme.colorScheme.onPrimary,
               modifier = Modifier.size(20.dp)
             )
@@ -305,7 +305,7 @@ fun ContentSection() {
         }
         Icon(
           imageVector = Icons.Outlined.ChevronRight,
-          contentDescription = "Go",
+          contentDescription = null,
           tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
       }
