@@ -47,6 +47,10 @@ class SectionHeadingTest {
     composeTestRule
       .onNodeWithText("Skills & Expertise")
       .assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading))
+
+    composeTestRule
+      .onNodeWithText("Programming Languages")
+      .assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading))
   }
 
   @Test
