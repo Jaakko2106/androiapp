@@ -197,7 +197,7 @@ fun ContentSection() {
         ) {
           Icon(
             imageVector = Icons.Outlined.RocketLaunch,
-            contentDescription = "Featured Project",
+            contentDescription = null,
             tint = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier.size(32.dp)
           )
