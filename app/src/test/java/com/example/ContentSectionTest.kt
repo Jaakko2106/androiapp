@@ -1,7 +1,10 @@
 package com.example
 
 import androidx.compose.material3.Surface
-import androidx.compose.ui.test.assertDoesNotExist
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -40,5 +43,21 @@ class ContentSectionTest {
     composeTestRule
       .onNodeWithContentDescription("Featured Project")
       .assertDoesNotExist()
+  }
+
+  @Test
+  fun contentSection_contactCardRendersWithMergedSemanticsAndButtonRole() {
+    composeTestRule.setContent {
+      MyApplicationTheme {
+        Surface {
+          ContentSection()
+        }
+      }
+    }
+
+    composeTestRule
+      .onNodeWithText("Get in touch", substring = true)
+      .assertIsDisplayed()
+      .assert(SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Button))
   }
 }
