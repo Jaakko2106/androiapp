@@ -5,6 +5,8 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import com.example.ui.theme.MyApplicationTheme
 import org.junit.Rule
@@ -62,5 +64,38 @@ class SectionHeadingTest {
     composeTestRule
       .onNodeWithText("Contact")
       .assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading))
+  }
+
+  @Test
+  fun skillCategoryTitle_hasHeadingSemantics() {
+    composeTestRule.setContent {
+      MyApplicationTheme {
+        Surface {
+          SkillCategory(
+            title = "Programming Languages",
+            skills = listOf(Pair("Kotlin", 0.9f))
+          )
+        }
+      }
+    }
+
+    composeTestRule
+      .onNodeWithText("Programming Languages")
+      .assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading))
+  }
+
+  @Test
+  fun aboutSection_profilePictureHasDescriptiveAltText() {
+    composeTestRule.setContent {
+      MyApplicationTheme {
+        Surface {
+          AboutSection()
+        }
+      }
+    }
+
+    composeTestRule
+      .onNodeWithContentDescription("Jaakko Kallio's profile picture")
+      .assertIsDisplayed()
   }
 }
