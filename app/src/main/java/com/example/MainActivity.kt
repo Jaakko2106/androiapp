@@ -473,7 +473,7 @@ fun AboutSection() {
     ) {
         Image(
             painter = painterResource(id = R.drawable.jaakko_avatar),
-            contentDescription = "Profile Picture",
+            contentDescription = "Jaakko Kallio's profile picture",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(160.dp)
@@ -532,7 +532,8 @@ fun SkillCategory(title: String, skills: List<Pair<String, Float>>) {
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.semantics { heading() }
             )
             Spacer(modifier = Modifier.height(16.dp))
             skills.forEach { (skill, proficiency) ->
