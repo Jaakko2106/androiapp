@@ -58,6 +58,11 @@ android {
   testOptions { unitTests { isIncludeAndroidResources = true } }
 }
 
+tasks.withType<Test>().configureEach {
+  systemProperty("robolectric.dependency.repo.url", "https://maven-central.storage-download.googleapis.com/maven2/")
+  systemProperty("robolectric.dependency.repo.id", "google")
+}
+
 // Configure the Secrets Gradle Plugin to use .env and .env.example files
 // to match the convention used in Web projects.
 secrets {
