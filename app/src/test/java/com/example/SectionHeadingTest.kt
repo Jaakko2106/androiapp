@@ -63,4 +63,19 @@ class SectionHeadingTest {
       .onNodeWithText("Contact")
       .assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading))
   }
+
+  @Test
+  fun skillCategoryTitle_hasHeadingSemantics() {
+    composeTestRule.setContent {
+      MyApplicationTheme {
+        Surface {
+          AboutSection()
+        }
+      }
+    }
+
+    composeTestRule
+      .onNodeWithText("Programming Languages")
+      .assert(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading))
+  }
 }
