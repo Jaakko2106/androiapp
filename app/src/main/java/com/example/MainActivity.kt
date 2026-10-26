@@ -724,7 +724,7 @@ fun StatsCard(icon: ImageVector, title: String, subtitle: String, modifier: Modi
             onClick = { },
             onClickLabel = "View details for $title"
         )
-        .semantics { role = Role.Button }
+        .semantics(mergeDescendants = true) { role = Role.Button }
   ) {
     Column(modifier = Modifier.padding(20.dp)) {
       Icon(
