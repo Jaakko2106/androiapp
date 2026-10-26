@@ -35,4 +35,19 @@ class HeaderSectionTest {
       .assert(SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Switch))
       .assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Dark mode active"))
   }
+
+  @Test
+  fun headerSection_profileInitials_hasContentDescription() {
+    composeTestRule.setContent {
+      MyApplicationTheme {
+        Surface {
+          HeaderSection(isDarkTheme = true, onThemeToggle = {})
+        }
+      }
+    }
+
+    composeTestRule
+      .onNodeWithContentDescription("Profile initials for Jaakko Kallio")
+      .assertExists()
+  }
 }
