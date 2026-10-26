@@ -187,7 +187,7 @@ fun ContentSection() {
             onClick = { },
             onClickLabel = "View featured project Zenith"
         )
-        .semantics { role = Role.Button }
+        .semantics(mergeDescendants = true) { role = Role.Button }
     ) {
       Column(modifier = Modifier.padding(24.dp)) {
         Row(
