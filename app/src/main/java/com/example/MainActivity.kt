@@ -532,7 +532,8 @@ fun SkillCategory(title: String, skills: List<Pair<String, Float>>) {
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.semantics { heading() }
             )
             Spacer(modifier = Modifier.height(16.dp))
             skills.forEach { (skill, proficiency) ->
