@@ -21,6 +21,21 @@ class HeaderSectionTest {
   @get:Rule val composeTestRule = createComposeRule()
 
   @Test
+  fun headerSection_avatar_hasContentDescription() {
+    composeTestRule.setContent {
+      MyApplicationTheme {
+        Surface {
+          HeaderSection(isDarkTheme = true, onThemeToggle = {})
+        }
+      }
+    }
+
+    composeTestRule
+      .onNodeWithContentDescription("Profile avatar for Jaakko")
+      .assertExists()
+  }
+
+  @Test
   fun headerSection_themeToggle_hasSwitchRoleAndStateDescription() {
     composeTestRule.setContent {
       MyApplicationTheme {
