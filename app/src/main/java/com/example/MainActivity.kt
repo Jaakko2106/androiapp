@@ -113,7 +113,10 @@ fun HeaderSection(isDarkTheme: Boolean, onThemeToggle: () -> Unit) {
       modifier = Modifier
         .size(48.dp)
         .clip(CircleShape)
-        .background(MaterialTheme.colorScheme.primaryContainer),
+        .background(MaterialTheme.colorScheme.primaryContainer)
+        .semantics(mergeDescendants = true) {
+          contentDescription = "Profile avatar for Jaakko"
+        },
       contentAlignment = Alignment.Center
     ) {
       Text(
