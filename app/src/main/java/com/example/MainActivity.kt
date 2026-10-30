@@ -641,6 +641,11 @@ fun ContactSection() {
                         )
                     }
                 }
+                Icon(
+                    imageVector = Icons.Outlined.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
 
@@ -693,6 +698,11 @@ fun ContactSection() {
                         )
                     }
                 }
+                Icon(
+                    imageVector = Icons.Outlined.ChevronRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }
